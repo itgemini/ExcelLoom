@@ -178,41 +178,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.6.0</version>
-                <configuration>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <shadedArtifactAttached>false</shadedArtifactAttached>
-                    <relocations>
-                        <relocation>
-                            <pattern>org.apache.poi</pattern>
-                            <shadedPattern>io.github.itgemini.excelloom.shaded.org.apache.poi</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>org.apache.xmlbeans</pattern>
-                            <shadedPattern>io.github.itgemini.excelloom.shaded.org.apache.xmlbeans</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>org.apache.commons</pattern>
-                            <shadedPattern>io.github.itgemini.excelloom.shaded.org.apache.commons</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>commons-io</pattern>
-                            <shadedPattern>io.github.itgemini.excelloom.shaded.commons-io</shadedPattern>
-                        </relocation>
-                    </relocations>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 </project>
