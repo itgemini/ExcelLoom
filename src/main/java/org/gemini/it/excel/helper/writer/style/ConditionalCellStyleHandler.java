@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper.writer.style;
+package org.gemini.it.excel.helper.writer.style;
 
 import java.util.Objects;
 
@@ -9,9 +9,9 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import com.datashepherd.excel.helper.writer.style.condional.BackgroundColorCondition;
-import com.datashepherd.excel.helper.writer.style.condional.ColorCondition;
-import com.datashepherd.excel.helper.writer.style.condional.Conditional;
+import org.gemini.it.excel.helper.writer.style.condional.BackgroundColorCondition;
+import org.gemini.it.excel.helper.writer.style.condional.ColorCondition;
+import org.gemini.it.excel.helper.writer.style.condional.Conditional;
 
 public interface ConditionalCellStyleHandler extends Conditional {
     default <T> void createConditionalCellStyle(ColorCondition colorCondition, T fieldValue, Font font) {

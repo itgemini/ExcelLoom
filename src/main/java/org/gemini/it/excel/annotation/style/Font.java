@@ -1,16 +1,17 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.annotation.style;
+package org.gemini.it.excel.annotation.style;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.datashepherd.excel.enums.Color;
-import com.datashepherd.excel.enums.FontName;
-import com.datashepherd.excel.enums.FontStyle;
+import org.gemini.it.excel.enums.Color;
+import org.gemini.it.excel.enums.FontName;
+import org.gemini.it.excel.enums.FontStyle;
+
 
 /**
  * Font is an annotation used to define the font applyFormatAndStyles of a cell in an Excel sheet.

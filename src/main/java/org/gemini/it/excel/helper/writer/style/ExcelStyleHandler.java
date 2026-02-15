@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper.writer.style;
+package org.gemini.it.excel.helper.writer.style;
 
 
 /**

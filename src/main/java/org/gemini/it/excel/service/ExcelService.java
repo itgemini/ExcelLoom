@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.service;
+package org.gemini.it.excel.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -16,9 +16,9 @@ import java.util.Optional;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
-import com.datashepherd.excel.exception.WorkbookException;
-import com.datashepherd.excel.helper.WorkbookFactory;
-import com.datashepherd.excel.helper.WorkbookType;
+import org.gemini.it.excel.exception.WorkbookException;
+import org.gemini.it.excel.helper.WorkbookFactory;
+import org.gemini.it.excel.helper.WorkbookType;
 
 class ExcelService {
     protected Workbook workbook;
@@ -68,7 +68,7 @@ class ExcelService {
             type = WorkbookType.XSSF;
             workbook = WorkbookFactory.createWorkbook(WorkbookType.XSSF, inputStream);
         } catch (ReflectiveOperationException | IOException e) {
-            throw new WorkbookException("Error creating XSSFWorkbook instance with the template input stream",e);
+            throw new WorkbookException("Error creating XSSFWorkbook instance with the template input stream", e);
         }
     }
 

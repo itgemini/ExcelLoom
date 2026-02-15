@@ -1,14 +1,14 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper.writer.model;
+package org.gemini.it.excel.helper.writer.model;
 
 import java.util.Objects;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Drawing;
-import com.datashepherd.excel.annotation.Image;
+import org.gemini.it.excel.annotation.Image;
 
 public class CellImageHandler {
     private CellImageHandler() {}

@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper.writer.model;
+package org.gemini.it.excel.helper.writer.model;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,15 +10,15 @@ import java.util.Objects;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Sheet;
-import com.datashepherd.excel.annotation.Picture;
-import com.datashepherd.excel.exception.PictureException;
+import org.gemini.it.excel.annotation.Picture;
+import org.gemini.it.excel.exception.PictureException;
 
 public class SheetPictureHandler extends Anchor {
     public SheetPictureHandler(Sheet sheet,Class<?> clazz) {
         super(sheet);
-        if (!clazz.isAnnotationPresent(com.datashepherd.excel.annotation.Sheet.class) || Objects.isNull(clazz.getAnnotation(com.datashepherd.excel.annotation.Sheet.class).picture()) || StringUtils.isBlank(clazz.getAnnotation(com.datashepherd.excel.annotation.Sheet.class).picture().path()))
+        if (!clazz.isAnnotationPresent(org.gemini.it.excel.annotation.Sheet.class) || Objects.isNull(clazz.getAnnotation(org.gemini.it.excel.annotation.Sheet.class).picture()) || StringUtils.isBlank(clazz.getAnnotation(org.gemini.it.excel.annotation.Sheet.class).picture().path()))
             return;
-        Picture picture = clazz.getAnnotation(com.datashepherd.excel.annotation.Sheet.class).picture();
+        Picture picture = clazz.getAnnotation(org.gemini.it.excel.annotation.Sheet.class).picture();
         clientAnchor.setCol1(picture.startColumn());
         clientAnchor.setRow1(picture.startRow());
         clientAnchor.setCol2(picture.endColumn());
@@ -48,7 +48,7 @@ public class SheetPictureHandler extends Anchor {
             clientAnchor.setDx1(dx);
             clientAnchor.setDy1(dy);
         } catch (IOException e) {
-            throw new PictureException(e.getMessage(),e);
+            throw new PictureException(e.getMessage(), e);
         }
     }
 }

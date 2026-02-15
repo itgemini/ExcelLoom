@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.annotation.style;
+package org.gemini.it.excel.annotation.style;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
-import com.datashepherd.excel.enums.Color;
+import org.gemini.it.excel.enums.Color;
 
 /**
  * ExcelStyle is an annotation used to define the applyFormatAndStyles of a cell or column in an Excel sheet.

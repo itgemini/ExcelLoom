@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.annotation;
+package org.gemini.it.excel.annotation;
 
 
 import java.lang.annotation.ElementType;
@@ -9,7 +9,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.datashepherd.excel.enums.ImageType;
+import org.gemini.it.excel.enums.ImageType;
+
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)

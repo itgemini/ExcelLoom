@@ -1,14 +1,15 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper;
+package org.gemini.it.excel.helper;
 
 import java.lang.reflect.Field;
 import java.util.stream.Stream;
 
-import com.datashepherd.excel.annotation.Child;
-import com.datashepherd.excel.annotation.ExcelColumn;
-import com.datashepherd.excel.annotation.Sheet;
+import org.gemini.it.excel.annotation.Child;
+import org.gemini.it.excel.annotation.ExcelColumn;
+import org.gemini.it.excel.annotation.Sheet;
+
 
 /**
  * Helper class to extract metadata from annotated Excel entity classes.

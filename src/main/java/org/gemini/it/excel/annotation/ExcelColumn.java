@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.annotation;
+package org.gemini.it.excel.annotation;
 
 
 import java.lang.annotation.ElementType;
@@ -10,9 +10,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.apache.poi.ss.usermodel.FillPatternType;
-import com.datashepherd.excel.annotation.style.ExcelStyle;
-import com.datashepherd.excel.annotation.style.Font;
-import com.datashepherd.excel.enums.Color;
+import org.gemini.it.excel.annotation.style.ExcelStyle;
+import org.gemini.it.excel.annotation.style.Font;
+import org.gemini.it.excel.enums.Color;
 
 
 /**
@@ -33,7 +33,7 @@ public @interface ExcelColumn {
 
     /**
      * Specifies the format of the column in the Excel sheet.
-     * use {@link com.datashepherd.excel.enums.PercentageFormat} {@link com.datashepherd.excel.enums.DateFormat} {@link com.datashepherd.excel.enums.CurrencyFormat} to specify the format.
+     * use {@link org.gemini.it.excel.enums.PercentageFormat} {@link org.gemini.it.excel.enums.DateFormat} {@link org.gemini.it.excel.enums.CurrencyFormat} to specify the format.
      */
     String format() default "";
 

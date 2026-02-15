@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.annotation;
+package org.gemini.it.excel.annotation;
 
 
 import java.lang.annotation.ElementType;
@@ -20,7 +20,8 @@ public @interface Cell {
     int lastColumn() default 0;
     /**
      * Specifies the format of the column in the Excel sheet.
-     * use {@link com.datashepherd.excel.enums.PercentageFormat} {@link com.datashepherd.excel.enums.DateFormat} {@link com.datashepherd.excel.enums.CurrencyFormat} to specify the format.
+     * use {@link org.gemini.it.excel.enums.PercentageFormat} {@link org.gemini.it.excel.enums.DateFormat}
+     * {@link org.gemini.it.excel.enums.CurrencyFormat} to specify the format.
      */
     String format() default "";
 }

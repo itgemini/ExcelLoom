@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper;
+package org.gemini.it.excel.helper;
 
 
 public enum WorkbookType {

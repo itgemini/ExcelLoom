@@ -1,4 +1,4 @@
-package com.datashepherd.excel.helper.writer.model;
+package org.gemini.it.excel.helper.writer.model;
 
 import java.util.Map;
 import java.util.Objects;
@@ -9,10 +9,10 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
-import com.datashepherd.excel.enums.FontStyle;
-import com.datashepherd.excel.helper.writer.style.ConditionalCellStyleHandler;
-import com.datashepherd.excel.helper.writer.style.DataStatusConditionHandler;
-import com.datashepherd.excel.helper.writer.style.ExcelStyleHandler;
+import org.gemini.it.excel.enums.FontStyle;
+import org.gemini.it.excel.helper.writer.style.ConditionalCellStyleHandler;
+import org.gemini.it.excel.helper.writer.style.DataStatusConditionHandler;
+import org.gemini.it.excel.helper.writer.style.ExcelStyleHandler;
 
 public class ExcelStyleManager implements ExcelStyleHandler, ConditionalCellStyleHandler, DataStatusConditionHandler {
     private final Workbook workbook;
@@ -27,7 +27,7 @@ public class ExcelStyleManager implements ExcelStyleHandler, ConditionalCellStyl
         return workbook.getCreationHelper().createDataFormat().getFormat(format);
     }
 
-    public CellStyle getOrCreateStyle(com.datashepherd.excel.annotation.style.ExcelStyle styleAnnotation, String format) {
+    public CellStyle getOrCreateStyle(org.gemini.it.excel.annotation.style.ExcelStyle styleAnnotation, String format) {
         short formatIndex = StringUtils.isNotBlank(format) ? getFormat(format) : -1;
         StyleKey key = new StyleKey(styleAnnotation, format);
         return styleCache.computeIfAbsent(key, k -> {
@@ -54,7 +54,7 @@ public class ExcelStyleManager implements ExcelStyleHandler, ConditionalCellStyl
         });
     }
 
-    public Font getOrCreateFont(com.datashepherd.excel.annotation.style.Font fontAnnotation) {
+    public Font getOrCreateFont(org.gemini.it.excel.annotation.style.Font fontAnnotation) {
         if (Objects.isNull(fontAnnotation)) return null;
         FontKey key = new FontKey(fontAnnotation);
         return fontCache.computeIfAbsent(key, k -> {
@@ -76,7 +76,7 @@ public class ExcelStyleManager implements ExcelStyleHandler, ConditionalCellStyl
         });
     }
 
-    public CellStyle getOrCreateStatusStyle(com.datashepherd.excel.helper.writer.style.condional.DataStatusCondition condition, Object value) {
+    public CellStyle getOrCreateStatusStyle(org.gemini.it.excel.helper.writer.style.condional.DataStatusCondition condition, Object value) {
         String statusName = condition.applyCondition(value).name();
         StyleKey key = new StyleKey(null, "STATUS_" + statusName);
         return styleCache.computeIfAbsent(key, k -> {
@@ -90,7 +90,7 @@ public class ExcelStyleManager implements ExcelStyleHandler, ConditionalCellStyl
         });
     }
 
-    public CellStyle getOrCreateConditionalStyle(com.datashepherd.excel.helper.writer.style.condional.ColorCondition colorCondition, com.datashepherd.excel.helper.writer.style.condional.BackgroundColorCondition backgroundColorCondition, Object value) {
+    public CellStyle getOrCreateConditionalStyle(org.gemini.it.excel.helper.writer.style.condional.ColorCondition colorCondition, org.gemini.it.excel.helper.writer.style.condional.BackgroundColorCondition backgroundColorCondition, Object value) {
         String keySuffix = (Objects.nonNull(colorCondition) ? "COLOR_" + colorCondition.applyCondition(value)
                                                                                        .name() : "") +
                 (Objects.nonNull(backgroundColorCondition) ? "_BG_" + backgroundColorCondition.applyCondition(value)
@@ -114,9 +114,9 @@ public class ExcelStyleManager implements ExcelStyleHandler, ConditionalCellStyl
         });
     }
 
-    private record StyleKey(com.datashepherd.excel.annotation.style.ExcelStyle annotation, String format) {
+    private record StyleKey(org.gemini.it.excel.annotation.style.ExcelStyle annotation, String format) {
     }
 
-    private record FontKey(com.datashepherd.excel.annotation.style.Font annotation) {
+    private record FontKey(org.gemini.it.excel.annotation.style.Font annotation) {
     }
 }

@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper.writer;
+package org.gemini.it.excel.helper.writer;
 
 public interface CellCommentCondition {
     <T> String applyCondition(T fieldValue);

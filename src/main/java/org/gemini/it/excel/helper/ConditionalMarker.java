@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper;
+package org.gemini.it.excel.helper;
 
 
 import java.lang.reflect.Field;
@@ -12,15 +12,15 @@ import java.util.function.BiConsumer;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import com.datashepherd.excel.annotation.ValidationComment;
-import com.datashepherd.excel.annotation.ValidationStatus;
-import com.datashepherd.excel.exception.StyleException;
-import com.datashepherd.excel.helper.writer.Conditional;
-import com.datashepherd.excel.helper.writer.model.CommentHelper;
-import com.datashepherd.excel.helper.writer.model.WritingContext;
-import com.datashepherd.excel.helper.writer.style.ConditionalCellStyleHandler;
-import com.datashepherd.excel.helper.writer.style.DataStatusConditionHandler;
-import com.datashepherd.excel.helper.writer.style.condional.DataStatusCondition;
+import org.gemini.it.excel.annotation.ValidationComment;
+import org.gemini.it.excel.annotation.ValidationStatus;
+import org.gemini.it.excel.exception.StyleException;
+import org.gemini.it.excel.helper.writer.Conditional;
+import org.gemini.it.excel.helper.writer.model.CommentHelper;
+import org.gemini.it.excel.helper.writer.model.WritingContext;
+import org.gemini.it.excel.helper.writer.style.ConditionalCellStyleHandler;
+import org.gemini.it.excel.helper.writer.style.DataStatusConditionHandler;
+import org.gemini.it.excel.helper.writer.style.condional.DataStatusCondition;
 
 /**
  * ConditionalMarker handles the registration and application of conditional formatting,

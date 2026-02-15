@@ -1,13 +1,13 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.service;
+package org.gemini.it.excel.service;
 
 import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.datashepherd.excel.exception.WorkbookException;
+import org.gemini.it.excel.exception.WorkbookException;
 
 public class ReaderService extends ExcelService {
     /**

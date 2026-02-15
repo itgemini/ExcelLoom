@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper.writer;
+package org.gemini.it.excel.helper.writer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -16,17 +16,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
-import com.datashepherd.excel.annotation.Child;
-import com.datashepherd.excel.annotation.ExcelColumn;
-import com.datashepherd.excel.annotation.style.ConditionalExcelCellStyle;
-import com.datashepherd.excel.exception.StyleException;
-import com.datashepherd.excel.helper.Children;
-import com.datashepherd.excel.helper.ConditionalMarker;
-import com.datashepherd.excel.helper.ExcelMetadataReader;
-import com.datashepherd.excel.helper.writer.model.TypeProcessorRegistry;
-import com.datashepherd.excel.helper.writer.model.WritingContext;
-import com.datashepherd.excel.helper.writer.style.condional.BackgroundColorCondition;
-import com.datashepherd.excel.helper.writer.style.condional.ColorCondition;
+import org.gemini.it.excel.annotation.Child;
+import org.gemini.it.excel.annotation.ExcelColumn;
+import org.gemini.it.excel.annotation.style.ConditionalExcelCellStyle;
+import org.gemini.it.excel.exception.StyleException;
+import org.gemini.it.excel.helper.Children;
+import org.gemini.it.excel.helper.ConditionalMarker;
+import org.gemini.it.excel.helper.ExcelMetadataReader;
+import org.gemini.it.excel.helper.writer.model.TypeProcessorRegistry;
+import org.gemini.it.excel.helper.writer.model.WritingContext;
+import org.gemini.it.excel.helper.writer.style.condional.BackgroundColorCondition;
+import org.gemini.it.excel.helper.writer.style.condional.ColorCondition;
 
 /**
  * Helper class to initialize the Excel structure for writing data.
@@ -98,7 +98,7 @@ public class InitiateExcelStructure extends ConditionalMarker {
         super(context);
         registerChildren(clazz);
         registerColorConditional(clazz);
-        com.datashepherd.excel.annotation.Sheet sheetAnn = ExcelMetadataReader.getSheetAnnotation(clazz);
+        org.gemini.it.excel.annotation.Sheet sheetAnn = ExcelMetadataReader.getSheetAnnotation(clazz);
         int headerRowNum = sheetAnn.headerRow();
         Row headerRow = context.sheet().getRow(headerRowNum) == null ? context.sheet()
                                                                               .createRow(headerRowNum) : context.sheet()

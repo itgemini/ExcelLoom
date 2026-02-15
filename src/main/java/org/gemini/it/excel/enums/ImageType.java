@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.enums;
+package org.gemini.it.excel.enums;
 
 
 public enum ImageType {

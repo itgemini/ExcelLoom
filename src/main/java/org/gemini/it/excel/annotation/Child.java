@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.annotation;
+package org.gemini.it.excel.annotation;
 
 
 import java.lang.annotation.ElementType;

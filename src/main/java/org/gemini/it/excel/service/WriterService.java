@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.service;
+package org.gemini.it.excel.service;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -15,28 +15,28 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import com.datashepherd.excel.annotation.Cell;
-import com.datashepherd.excel.annotation.Image;
-import com.datashepherd.excel.annotation.Sheet;
-import com.datashepherd.excel.exception.WorkbookException;
-import com.datashepherd.excel.exception.WriteException;
-import com.datashepherd.excel.helper.WorkbookFactory;
-import com.datashepherd.excel.helper.WorkbookType;
-import com.datashepherd.excel.helper.writer.model.ExcelStyleManager;
-import com.datashepherd.excel.helper.writer.model.WritingContext;
-import com.datashepherd.excel.helper.writer.style.condional.Registry;
+import org.gemini.it.excel.annotation.Cell;
+import org.gemini.it.excel.annotation.Image;
+import org.gemini.it.excel.annotation.Sheet;
+import org.gemini.it.excel.exception.WorkbookException;
+import org.gemini.it.excel.exception.WriteException;
+import org.gemini.it.excel.helper.WorkbookFactory;
+import org.gemini.it.excel.helper.WorkbookType;
+import org.gemini.it.excel.helper.writer.model.ExcelStyleManager;
+import org.gemini.it.excel.helper.writer.model.WritingContext;
+import org.gemini.it.excel.helper.writer.style.condional.Registry;
 
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.BOOLEAN;
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.DATE;
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.DOUBLE;
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.FLOAT;
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.IMAGE;
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.INTEGER;
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.LOCAL_DATE;
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.LOCAL_DATE_TIME;
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.LONG;
-import static com.datashepherd.excel.helper.writer.InitiateExcelStructure.TEXT;
-import static com.datashepherd.excel.service.Writer.MESSAGE;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.BOOLEAN;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.DATE;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.DOUBLE;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.FLOAT;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.IMAGE;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.INTEGER;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.LOCAL_DATE;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.LOCAL_DATE_TIME;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.LONG;
+import static org.gemini.it.excel.helper.writer.InitiateExcelStructure.TEXT;
+import static org.gemini.it.excel.service.Writer.MESSAGE;
 
 public class WriterService extends ExcelService {
     /**
@@ -107,7 +107,7 @@ public class WriterService extends ExcelService {
             type = WorkbookType.XSSF;
             workbook = WorkbookFactory.createWorkbook(type);
         } catch (ReflectiveOperationException e) {
-            throw new WorkbookException("Error creating XSSFWorkbook instance",e);
+            throw new WorkbookException("Error creating XSSFWorkbook instance", e);
         }
         return this;
     }
@@ -214,7 +214,7 @@ public class WriterService extends ExcelService {
                 org.apache.poi.ss.usermodel.Cell cellC = Optional.ofNullable(row.getCell(cell.column())).orElseGet(()->row.createCell(cell.column()));
                 setInfo(cellC,field,template);
                 ExcelStyleManager styleManager = WritingContext.of(workbook, sheet, new Registry()).styleManager();
-                cellC.setCellStyle(styleManager.getOrCreateStyle(field.getAnnotation(com.datashepherd.excel.annotation.style.ExcelStyle.class), cell.format()));
+                cellC.setCellStyle(styleManager.getOrCreateStyle(field.getAnnotation(org.gemini.it.excel.annotation.style.ExcelStyle.class), cell.format()));
             } else {
                 Row row = Optional.ofNullable(sheet.getRow(cell.firstRow())).orElseGet(()->sheet.createRow(cell.firstRow()));
                 Optional.ofNullable(sheet.getRow(cell.lastRow())).orElseGet(()->sheet.createRow(cell.lastRow()));
@@ -224,7 +224,7 @@ public class WriterService extends ExcelService {
                 sheet.addMergedRegionUnsafe(cellAddresses);
                 setInfo(cellC,field,template);
                 ExcelStyleManager styleManager = WritingContext.of(workbook, sheet, new Registry()).styleManager();
-                cellC.setCellStyle(styleManager.getOrCreateStyle(field.getAnnotation(com.datashepherd.excel.annotation.style.ExcelStyle.class), cell.format()));
+                cellC.setCellStyle(styleManager.getOrCreateStyle(field.getAnnotation(org.gemini.it.excel.annotation.style.ExcelStyle.class), cell.format()));
             }
         }
     }

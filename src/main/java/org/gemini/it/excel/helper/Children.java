@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper;
+package org.gemini.it.excel.helper;
 
 
 public record Children(String name,Class<?> mappedBy,String referencedBy) {

@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper;
+package org.gemini.it.excel.helper;
 
 
 import java.io.InputStream;
@@ -10,7 +10,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import static com.datashepherd.excel.helper.WorkbookType.SXSSF;
+import static org.gemini.it.excel.helper.WorkbookType.SXSSF;
+
 
 public class WorkbookFactory {
     static {

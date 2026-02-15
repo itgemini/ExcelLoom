@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.exception;
+package org.gemini.it.excel.exception;
 
 
 public class ReadException extends RuntimeException {

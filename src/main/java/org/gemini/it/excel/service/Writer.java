@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.service;
+package org.gemini.it.excel.service;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -20,17 +20,17 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import com.datashepherd.excel.annotation.ExcelColumn;
-import com.datashepherd.excel.annotation.Image;
-import com.datashepherd.excel.annotation.Sheet;
-import com.datashepherd.excel.annotation.style.ExcelStyle;
-import com.datashepherd.excel.exception.WorkbookException;
-import com.datashepherd.excel.helper.ExcelMetadataReader;
-import com.datashepherd.excel.helper.writer.Elements;
-import com.datashepherd.excel.helper.writer.InitiateExcelStructure;
-import com.datashepherd.excel.helper.writer.model.SheetPictureHandler;
-import com.datashepherd.excel.helper.writer.model.WritingContext;
-import com.datashepherd.excel.helper.writer.style.condional.Registry;
+import org.gemini.it.excel.annotation.ExcelColumn;
+import org.gemini.it.excel.annotation.Image;
+import org.gemini.it.excel.annotation.Sheet;
+import org.gemini.it.excel.annotation.style.ExcelStyle;
+import org.gemini.it.excel.exception.WorkbookException;
+import org.gemini.it.excel.helper.ExcelMetadataReader;
+import org.gemini.it.excel.helper.writer.Elements;
+import org.gemini.it.excel.helper.writer.InitiateExcelStructure;
+import org.gemini.it.excel.helper.writer.model.SheetPictureHandler;
+import org.gemini.it.excel.helper.writer.model.WritingContext;
+import org.gemini.it.excel.helper.writer.style.condional.Registry;
 
 /**
  * Writer class extends Excel class and is responsible for writing data to an Excel sheet.

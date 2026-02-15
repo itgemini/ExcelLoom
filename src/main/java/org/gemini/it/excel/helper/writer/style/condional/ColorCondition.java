@@ -1,9 +1,10 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper.writer.style.condional;
+package org.gemini.it.excel.helper.writer.style.condional;
 
-import com.datashepherd.excel.enums.Color;
+
+import org.gemini.it.excel.enums.Color;
 
 public interface ColorCondition {
     <T> Color applyCondition(T fieldValue);

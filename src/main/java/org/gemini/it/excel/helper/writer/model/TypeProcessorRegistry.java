@@ -1,7 +1,7 @@
 /**
  * Author: Mohamed Zarrouki
  */
-package com.datashepherd.excel.helper.writer.model;
+package org.gemini.it.excel.helper.writer.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,8 +11,8 @@ import java.util.function.BiConsumer;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.ss.usermodel.Cell;
-import com.datashepherd.excel.annotation.Image;
-import com.datashepherd.excel.exception.StyleException;
+import org.gemini.it.excel.annotation.Image;
+import org.gemini.it.excel.exception.StyleException;
 
 /**
  * Registry for type-specific Excel cell processors.

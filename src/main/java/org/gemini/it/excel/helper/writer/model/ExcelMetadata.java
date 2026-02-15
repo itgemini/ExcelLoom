@@ -1,14 +1,15 @@
-package com.datashepherd.excel.helper.writer.model;
+package org.gemini.it.excel.helper.writer.model;
 
 import java.util.List;
 import java.util.function.Function;
 
-import com.datashepherd.excel.annotation.ExcelColumn;
-import com.datashepherd.excel.annotation.Image;
-import com.datashepherd.excel.annotation.ValidationComment;
-import com.datashepherd.excel.annotation.ValidationStatus;
-import com.datashepherd.excel.annotation.style.ConditionalExcelCellStyle;
-import com.datashepherd.excel.annotation.style.ExcelStyle;
+import org.gemini.it.excel.annotation.ExcelColumn;
+import org.gemini.it.excel.annotation.Image;
+import org.gemini.it.excel.annotation.ValidationComment;
+import org.gemini.it.excel.annotation.ValidationStatus;
+import org.gemini.it.excel.annotation.style.ConditionalExcelCellStyle;
+import org.gemini.it.excel.annotation.style.ExcelStyle;
+
 
 public record ExcelMetadata(
         Class<?> entityClass,
