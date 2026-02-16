@@ -15,10 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
 import ExcelLoom.excel.annotation.Child;
 import ExcelLoom.excel.annotation.ExcelColumn;
 import ExcelLoom.excel.annotation.Sheet;
@@ -28,14 +24,19 @@ import ExcelLoom.excel.helper.Children;
 import ExcelLoom.excel.helper.ConditionalMarker;
 import ExcelLoom.excel.helper.ExcelMetadataReader;
 import ExcelLoom.excel.helper.reader.Processor;
-import ExcelLoom.excel.helper.reader.TypeExtractorRegistry;
 import ExcelLoom.excel.helper.reader.Structure;
+import ExcelLoom.excel.helper.reader.TypeExtractorRegistry;
 import ExcelLoom.excel.helper.writer.model.WritingContext;
 import ExcelLoom.excel.helper.writer.style.condional.Registry;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+
 import static org.apache.poi.ss.usermodel.CellType.STRING;
 
-class Reader<T> extends ConditionalMarker {
+public class Reader<T> extends ConditionalMarker {
     private final Class<T> entityClass;
     private final String endSheet;
     private final Integer skipHeader;
