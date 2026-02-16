@@ -1,16 +1,16 @@
-# 📊 DataShepherd: The Ultimate Java Excel API
+# 📊 ExcelLoom: The Ultimate Java Excel API
 
-[![Java Version](https://img.shields.io/badge/Java-21-orange)](https://openjdk.org/)
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-2.5.2-blue)](https://search.maven.org/)
+[![Java Version](https://img.shields.io/badge/Java-21+-orange)](https://openjdk.org/)
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-1.0.0-blue)](https://search.maven.org/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
-DataShepherd is a high-performance, annotation-driven Java library that transforms Excel operations from complex to
+ExcelLoom is a high-performance, annotation-driven Java library that transforms Excel operations from complex to
 simple. Built on Apache POI, it provides a declarative, clean API using Java annotations that handles everything from
 basic data export to complex multi-sheet relationships, validation, styling, and image embedding.
 
 ---
 
-## 🎯 Why DataShepherd?
+## 🎯 Why ExcelLoom?
 
 ### Traditional Apache POI Approach (50+ lines)
 
@@ -37,7 +37,7 @@ setCellStyle(headerStyle);
 // ... 40 more lines for data, styling, etc.
 ```
 
-### DataShepherd Approach (5 lines)
+### ExcelLoom Approach (5 lines)
 
 ```java
 
@@ -67,17 +67,19 @@ saveExcelTo("users.xlsx");
 ## 🚀 Quick Start
 
 ### Maven Installation
+
 ```xml
+
 <dependency>
     <groupId>io.github.itgemini</groupId>
-    <artifactId>dataShepherd</artifactId>
-    <version>2.2.2</version>
+    <artifactId>ExcelLoom</artifactId>
+    <version>1.0.0</version>
 </dependency>
 ```
 
 ### Requirements
 
-- **Java:** 21 (required)
+- **Java:** 21+ (required)
 - **Apache POI:** Automatically managed as transitive dependency
 - **Memory:** Minimal footprint with streaming support for large files
 
@@ -87,12 +89,13 @@ saveExcelTo("users.xlsx");
 
 ### Example 1: Basic Writing - Automatic Column Mapping
 
-DataShepherd automatically maps your Java fields to Excel columns in declaration order. No configuration needed for
+ExcelLoom automatically maps your Java fields to Excel columns in declaration order. No configuration needed for
 simple exports.
 
 **📋 Use Case:** Quick data exports, simple reports, CSV replacements
 
 **Java Entity:**
+
 ```java
 
 @Sheet(name = "BasicData")
@@ -116,18 +119,8 @@ List<User> users = List.of(
         new User(3, "Bob Johnson")
 );
 
-new
-
-WriterService()
-    .
-
-xlsx()
-    .
-
-writeToExcel(users, User .class)
-    .
-
-saveExcelTo("basic.xlsx");
+new WriterService().xlsx().writeToExcel(users, User .class)
+    .saveExcelTo("basic.xlsx");
 ```
 
 **Direct Byte Content:**
@@ -149,17 +142,23 @@ byte[] content = new WriterService()
 
 ---
 
-### Example 2: Manual Column Positioning & Header Row Control
+### Example 2: Manual Column Positioning & Sheet Structure Control
 
 For professional reports where you need blank rows at the top (for logos, titles) or specific column ordering, use
-`position` and `headerRow`.
+`position`, `headerRowIndex`, `skipHeader`, and `endSheet`.
 
-**📋 Use Case:** Financial reports, executive summaries, forms with custom headers
+**📋 Use Case:** Financial reports with metadata, executive summaries, or sheets with dynamic footers.
 
 **Java Entity:**
+
 ```java
 
-@Sheet(name = "FormattedData", headerRow = 2) // Header starts at row 3 (index 2)
+@Sheet(
+        name = "FormattedData",
+        headerRowIndex = 2,    // Header starts at row 3 (index 2)
+        skipHeader = 1,        // Skip 1 row after header before reading data
+        endSheet = "STOP"      // Stop reading when "STOP" is encountered in any cell
+)
 public class Product {
     @ExcelColumn(name = "SKU", position = 1)  // Column B
     private String sku;
@@ -172,33 +171,15 @@ public class Product {
 }
 ```
 
-**Write Code:**
-
-```java
-List<Product> products = List.of(
-        new Product("PROD-001", 99.99, 50),
-        new Product("PROD-002", 149.99, 30)
-);
-
-new
-
-WriterService()
-    .
-
-xlsx()
-    .
-
-writeToExcel(products, Product .class)
-    .
-
-saveExcelTo("formatted.xlsx");
-```
-
 **Key Features:**
 
-- `headerRow = 2`: Rows 0 and 1 left empty for your custom content (logos, titles)
-- `position = 0`: Explicitly sets column index (overrides declaration order)
-- Perfect for matching existing templates or corporate formats
+- `headerRowIndex = 2`: Specifies the row containing column names (zero-based). Rows 0 and 1 can be used for custom
+  content.
+- `skipHeader = 1`: In reading mode, skips the specified number of lines immediately after the header row before
+  starting to parse data.
+- `endSheet = "STOP"`: In reading mode, tells the processor to stop reading rows as soon as the string "STOP" is
+  encountered. This is ideal for files with dynamic lengths or footers.
+- `position = 0`: Explicitly sets column index (overrides declaration order).
 
 **💡 Pro Tip:** Use the empty rows above the header for:
 
@@ -208,14 +189,47 @@ saveExcelTo("formatted.xlsx");
 
 ---
 
-### Example 3: Professional Styling - Static & Conditional
+### Example 3: Professional Styling - Static, Multi-Styled & Conditional
 
-Apply corporate branding and highlight important data with zero manual style management. DataShepherd automatically
+Apply corporate branding and highlight important data with zero manual style management. ExcelLoom automatically
 caches styles to avoid Excel's 64k style limit.
 
-**📋 Use Case:** Branded reports, data quality indicators, executive dashboards
+**📋 Use Case:** Branded reports, data quality indicators, executive dashboards, multi-formatted tables
+
+**Multi-Styled Java Entity:**
+
+```java
+
+@Sheet(name = "MultiStyled")
+public class MultiStyledEntity {
+    @ExcelColumn(name = "ID")
+    @ExcelStyle(
+            font = @Font(color = Color.BLACK, fontHeightInPoints = 12, fontStyle = FontStyle.BOLD),
+            backgroundColor = Color.YELLOW,
+            horizontalAlignment = HorizontalAlignment.LEFT
+    )
+    private int id;
+
+    @ExcelColumn(name = "Name")
+    @ExcelStyle(
+            font = @Font(color = Color.WHITE, fontHeightInPoints = 14, fontStyle = FontStyle.ITALIC),
+            backgroundColor = Color.BLUE,
+            horizontalAlignment = HorizontalAlignment.CENTER
+    )
+    private String name;
+
+    @ExcelColumn(name = "Status")
+    @ExcelStyle(
+            font = @Font(color = Color.DARK_RED, fontHeightInPoints = 10, fontStyle = FontStyle.NORMAL),
+            backgroundColor = Color.LIGHT_GREEN,
+            horizontalAlignment = HorizontalAlignment.RIGHT
+    )
+    private String status;
+}
+```
 
 **Custom Style Condition:**
+
 ```java
 public class PriceColorCondition implements ColorCondition {
     @Override
@@ -266,45 +280,53 @@ public class StyledProduct {
 }
 ```
 
+---
+
+### Example 4: Date, Currency & Percentage Formatting
+
+ExcelLoom provides built-in support for common business formats like ISO dates, major currencies, and precise
+percentages.
+
+**📋 Use Case:** Financial statements, payroll reports, performance tracking
+
+**Java Entity:**
+
+```java
+
+@Sheet(name = "FormattedData")
+public class FormattedEntity {
+    @ExcelColumn(name = "ID")
+    private int id;
+
+    @ExcelColumn(name = "Birthday", format = DateFormat.ISO_DATE)
+    private java.util.Date birthday;
+
+    @ExcelColumn(name = "Success Rate", format = PercentageFormat.PERCENTAGE_WITH_DECIMALS)
+    private double successRate;
+
+    @ExcelColumn(name = "Salary", format = CurrencyFormat.EURO)
+    private double salary;
+}
+```
+
 **Write Code:**
 
 ```java
-List<StyledProduct> products = List.of(
-        new StyledProduct("Premium Laptop", 1299.99, "Electronics"),
-        new StyledProduct("Wireless Mouse", 29.99, "Accessories"),
-        new StyledProduct("4K Monitor", 599.99, "Electronics")
-);
-
-new
-
-WriterService()
-    .
-
-xlsx()
-    .
-
-writeToExcel(products, StyledProduct .class)
-    .
-
-saveExcelTo("styled.xlsx");
+new WriterService().xlsx().writeToExcel(data, FormattedEntity .class)
+    .saveExcelTo("formatted_finance.xlsx");
 ```
-
-**Advanced Features:**
-
-- **Style Caching:** Styles are automatically pooled by `ExcelStyleManager` to prevent Excel's 64k limit
-- **Conditional Logic:** Different cells in the same column can have different colors
-- **Full Control:** Font family, size, color, bold/italic, background, borders, alignment
 
 ---
 
-### Example 4: Data Validation with Status Colors & Comments
+### Example 5: Data Validation with Status Colors & Comments
 
-Generate "Report Cards" for your data imports. DataShepherd validates data and marks errors with colored cells and Excel
+Generate "Report Cards" for your data imports. ExcelLoom validates data and marks errors with colored cells and Excel
 comments - perfect for user feedback loops.
 
 **📋 Use Case:** Data import validation, quality reports, user error feedback
 
 **Validation Logic:**
+
 ```java
 // Validator: Determines cell background color
 public class EmailValidator implements DataStatusCondition {
@@ -345,38 +367,29 @@ public class EmailErrorComment implements CellCommentCondition {
 ```java
 
 @Sheet(name = "ValidatedUsers")
-public class ValidatedUser {
-    @ExcelColumn(name = "User ID")
-    private int id;
-
+public class ImportEntity {
     @ExcelColumn(name = "Email Address")
-    @ValidationStatus(status = EmailValidator.class)        // Adds color
-    @ValidationComment(comment = EmailErrorComment.class)   // Adds comment
+    @ValidationStatus(status = EmailValidator.class)
+    @ValidationComment(comment = EmailErrorComment.class)
     private String email;
 }
 ```
 
 **Write Code:**
+
 ```java
-List<ValidatedUser> users = List.of(
-        new ValidatedUser(1, "john@example.com"),
-        new ValidatedUser(2, "invalid-email"),     // Will be red
-        new ValidatedUser(3, ""),                   // Will be yellow
-        new ValidatedUser(4, "jane@test.com")      // Will be green
-);
+new WriterService().xlsx().writeToExcel(users, ImportEntity .class)
+    .saveExcelTo("validated.xlsx");
+```
 
-new
+**Advanced Reading with Validation Feedback:**
+You can read a "clean" file and automatically apply these validations to the workbook in memory to save it back as a
+report.
 
-WriterService()
-    .
-
-xlsx()
-    .
-
-writeToExcel(users, ValidatedUser .class)
-    .
-
-saveExcelTo("validated.xlsx");
+```java
+ReaderService readerService = new ReaderService().xlsx("input.xlsx");
+List<ImportEntity> data = readerService.readFromExcel(ImportEntity.class);
+readerService.saveExcelTo("validation_report.xlsx");
 ```
 
 **Status Colors:**
@@ -389,20 +402,21 @@ saveExcelTo("validated.xlsx");
 **💡 Real-World Workflow:**
 
 1. User uploads data file to your system
-2. You read it with DataShepherd + validation annotations
+2. You read it with ExcelLoom + validation annotations
 3. System generates new file with errors highlighted
 4. User downloads corrected file, fixes errors (red cells)
 5. User re-uploads → repeat until all green
 
 ---
 
-### Example 5: Images as Column Data
+### Example 6: Images as Column Data
 
 Embed images directly in cells - perfect for product catalogs, employee directories, or any data with visual components.
 
 **📋 Use Case:** Product catalogs, employee badges, real estate listings, inventory with photos
 
 **Java Entity:**
+
 ```java
 
 @Sheet(name = "ProductCatalog")
@@ -429,18 +443,8 @@ List<ProductWithImage> products = List.of(
         new ProductWithImage("PROD-001", "Laptop", photo1)
 );
 
-new
-
-WriterService()
-    .
-
-xlsx()
-    .
-
-writeToExcel(products, ProductWithImage .class)
-    .
-
-saveExcelTo("catalog.xlsx");
+new WriterService().xlsx().writeToExcel(products, ProductWithImage .class)
+    .saveExcelTo("catalog.xlsx");
 ```
 
 **Image Configuration:**
@@ -452,55 +456,54 @@ saveExcelTo("catalog.xlsx");
 
 ---
 
-### Example 6: Professional Cover Sheets with Images
+### Example 7: Professional Cover Sheets with Fixed Cells & Images
 
-Create presentation-ready workbooks with branded cover pages. Perfect for reports sent to executives or clients.
+Create presentation-ready workbooks with branded cover pages and precisely positioned content.
 
 **📋 Use Case:** Executive reports, client deliverables, quarterly reviews, audits
 
 **Cover Sheet Definition:**
+
 ```java
 
-@Sheet(name = "CoverPage",
+@Sheet(name = "Cover",
         picture = @Picture(
-                path = "company_logo.png",  // Path to your logo
-                startColumn = 1,             // Logo spans B1:D5
-                startRow = 1,
-                endColumn = 3,
-                endRow = 5
+                path = "company_logo.jpg",
+                startColumn = 1, startRow = 1,
+                endColumn = 5, endRow = 5
         ))
-public class ReportCover {
+public class CoverEntity {
     @Cell(row = 6, column = 1)
-    private final String reportTitle = "Q4 2024 Performance Report";
-
-    @Cell(row = 7, column = 1)
-    private final String reportSubtitle = "Financial Analysis & Projections";
+    @ExcelStyle(
+            font = @Font(color = Color.WHITE, fontHeightInPoints = 16, fontStyle = FontStyle.BOLD),
+            backgroundColor = Color.DARK_BLUE,
+            horizontalAlignment = HorizontalAlignment.CENTER
+    )
+    private final String title = "Data Report 2024";
 
     @Cell(row = 8, column = 1)
-    private final String preparedBy = "Prepared by: Finance Team";
+    @ExcelStyle(
+            font = @Font(color = Color.BLACK, fontHeightInPoints = 12, fontStyle = FontStyle.ITALIC),
+            backgroundColor = Color.LIGHT_YELLOW,
+            horizontalAlignment = HorizontalAlignment.LEFT
+    )
+    private final String description = "This report contains generated data for testing purposes.";
+
+    @Image(extension = ImageType.PICTURE_TYPE_JPEG, width = 200, height = 200)
+    @Cell(row = 10, column = 1)
+    private byte[] coverImage; // Optional: separate image in a specific cell
 }
 ```
 
 **Write Code:**
+
 ```java
-ReportCover cover = new ReportCover();
-List<FinancialRecord> data = loadFinancialData();
+CoverEntity cover = new CoverEntity();
+List<FormattedEntity> data = generateData();
 
-new
-
-WriterService()
-    .
-
-xlsx()
-    .
-
-cover(cover)  // Injects cover sheet FIRST
-    .
-
-writeToExcel(data, FinancialRecord .class)  // Then data sheets
-    .
-
-saveExcelTo("Q4_Report.xlsx");
+new WriterService().xlsx().cover(cover)
+    .writeToExcel(data, FormattedEntity .class)
+    .saveExcelTo("Branded_Report.xlsx");
 ```
 
 **Cover Sheet Features:**
@@ -526,14 +529,15 @@ saveExcelTo("Q4_Report.xlsx");
 
 ---
 
-### Example 7: Master-Detail Relationships (Parent-Child Data)
+### Example 8: Master-Detail Relationships (Parent-Child Data)
 
-Handle complex hierarchical data with automatic relationship management. DataShepherd splits your object graph into
+Handle complex hierarchical data with automatic relationship management. ExcelLoom splits your object graph into
 normalized sheets and maintains referential integrity.
 
 **📋 Use Case:** Orders & line items, departments & employees, projects & tasks
 
 **Parent Entity (Order):**
+
 ```java
 
 @Sheet(name = "Orders")
@@ -551,6 +555,7 @@ public class Order {
 ```
 
 **Child Entity (OrderItem):**
+
 ```java
 
 @Sheet(name = "OrderItems")
@@ -569,32 +574,25 @@ public class OrderItem {
 ```
 
 **Write Code:**
+
 ```java
-// DataShepherd automatically splits into 2 sheets
-new WriterService()
-    .
-
-xlsx()
-    .
-
-writeToExcel(orders, Order .class)
-    .
-
-saveExcelTo("orders.xlsx");
+// ExcelLoom automatically splits into 2 sheets
+new WriterService().xlsx().writeToExcel(orders, Order .class)
+    .saveExcelTo("orders.xlsx");
 ```
 
 **How It Works:**
 
-1. `@Child` on `Order.items` tells DataShepherd to write items to separate sheet
+1. `@Child` on `Order.items` tells ExcelLoom to write items to separate sheet
 2. `referencedBy = "orderId"` specifies the foreign key field in `OrderItem`
 3. `@Parent(reference = "id")` on `OrderItem.orderId` links back to `Order.id`
-4. DataShepherd automatically writes both sheets with correct references
+4. ExcelLoom automatically writes both sheets with correct references
 
 ---
 
-### Example 8: Streaming Mode for Large Files (1M+ Rows)
+### Example 9: Streaming Mode for Large Files (1M+ Rows)
 
-For enterprise-scale exports, DataShepherd uses Apache POI's `SXSSF` streaming API. Writes to temp files on disk,
+For enterprise-scale exports, ExcelLoom uses Apache POI's `SXSSF` streaming API. Writes to temp files on disk,
 keeping memory constant regardless of row count.
 
 **📋 Use Case:** Data warehouse exports, bulk data migrations, regulatory reports
@@ -604,21 +602,9 @@ keeping memory constant regardless of row count.
 ```java
 List<DataRecord> millionRecords = generateLargeDataset(1_000_000);
 
-new
-
-WriterService()
-    .
-
-xlsx()
-    .
-
-xlsxLarge() 
-    .
-
-writeToExcel(millionRecords, DataRecord .class)
-    .
-
-saveExcelTo("massive_export.xlsx");
+new WriterService().xlsx().xlsxLarge() 
+    .writeToExcel(millionRecords, DataRecord .class)
+    .saveExcelTo("massive_export.xlsx");
 ```
 
 **Performance Benchmarks:**
@@ -627,7 +613,7 @@ saveExcelTo("massive_export.xlsx");
 |-----------|--------------|------------|
 | 10,000    | ~50 MB       | ~0.5s      |
 | 100,000   | ~50 MB       | ~2s        |
-| 1,000,000 | ~50 MB       | ~5s        |
+| 1,000,000 | ~500 MB      | ~5s        |
 
 **Key Features:**
 
@@ -638,16 +624,34 @@ saveExcelTo("massive_export.xlsx");
 
 ## 📖 Reading Mode: Complete Examples
 
-### Example 1: Basic Reading
+### Example 1: Basic & Advanced Reading
 
-Reading is symmetric with writing. DataShepherd maps Excel columns back to Java fields by matching `@ExcelColumn` names.
+Reading is symmetric with writing. ExcelLoom maps Excel columns back to Java fields by matching `@ExcelColumn` names. It also respects sheet structure settings like `headerRowIndex`, `skipHeader`, and `endSheet`.
 
-**📋 Use Case:** Import user uploads, parse templates, load configuration
+**📋 Use Case:** Import user uploads with custom headers, parse templates with metadata, or read files with dynamic footers.
+
+**Java Entity (Advanced Structure):**
+
+```java
+@Sheet(
+    name = "DataImport", 
+    headerRowIndex = 2,    // Look for headers on row 3
+    skipHeader = 1,        // Skip 1 row of instructions after header
+    endSheet = "EOF"       // Stop reading when "EOF" is found
+)
+public class User {
+    @ExcelColumn(name = "ID")
+    private int id;
+
+    @ExcelColumn(name = "Full Name")
+    private String name;
+}
+```
 
 **Read Code:**
 
 ```java
-// Reads from "BasicData" sheet
+// Reads from "DataImport" sheet, respecting all @Sheet settings
 List<User> users = new ReaderService()
                 .xlsx("users.xlsx")
                 .readFromExcel(User.class);
@@ -655,9 +659,11 @@ List<User> users = new ReaderService()
 
 **How It Works:**
 
-1. `@Sheet(name = "BasicData")` tells DataShepherd which sheet to read
-2. Column headers are matched case-insensitively with `@ExcelColumn(name = ...)`
-3. Data types are automatically converted
+1. `@Sheet(name = "DataImport")` tells ExcelLoom which sheet to read.
+2. `headerRowIndex = 2`: Processor starts by finding headers on the 3rd row.
+3. `skipHeader = 1`: Processor skips the row immediately following the header before collecting data.
+4. `endSheet = "EOF"`: Processor stops immediately if "EOF" is encountered in any cell, ignoring everything below.
+5. Column headers are matched case-insensitively with `@ExcelColumn(name = ...)`.
 
 **Supported Data Types:**
 
@@ -671,7 +677,7 @@ List<User> users = new ReaderService()
 
 ### Example 2: Reading with Parent-Child Relationships
 
-When reading relational files, DataShepherd automatically rebuilds your object graph using an efficient O(N + M)
+When reading relational files, ExcelLoom automatically rebuilds your object graph using an efficient O(N + M)
 indexing strategy.
 
 **📋 Use Case:** Import orders with line items, organizational charts, project hierarchies
@@ -686,18 +692,30 @@ List<Order> orders = new ReaderService()
                 .readFromExcel(Order.class);
 ```
 
-**Performance:** O(N + M) where N = parents, M = children
-
-- 10,000 parents with 100,000 children: ~1s
+**Performance:** O(N + M) where N = parents, M = children.
+*Tested: Reading 1.5M relational records in seconds.*
 
 ---
 
-### Example 3: Read-Validate-Write Workflow (Unique Feature!)
+### Example 3: Read-Validate-Write Workflow (Validation Feedback)
 
-**This is DataShepherd's killer feature for data import pipelines.**
+**This is ExcelLoom's killer feature for data import pipelines.**
 
-Scenario: You receive a "clean" Excel file from users. You want to validate it, add error highlighting, and return it
-for correction.
+When you read a file using an entity with `@ValidationStatus` and `@ValidationComment`, ExcelLoom validates the data as it parses. You can then save the workbook back to generate an immediate feedback report for the user.
+
+**📋 Use Case:** Automated data auditing, import error reporting, quality control.
+
+**Java Entity with Validation:**
+
+```java
+@Sheet(name = "ImportData")
+public class ImportEntity {
+    @ExcelColumn(name = "Email")
+    @ValidationStatus(status = EmailValidator.class)    // Highlights cell color
+    @ValidationComment(comment = EmailErrorComment.class) // Adds Excel comment
+    private String email;
+}
+```
 
 **Workflow Code:**
 
@@ -706,20 +724,20 @@ for correction.
 ReaderService readerService = new ReaderService()
                 .xlsx("raw_data.xlsx");
 
-// 2. Read and validate (triggers validators and marks workbook in memory)
+// 2. Read and validate
+// This populates the 'data' list AND applies styles/comments to the workbook in memory
 List<ImportEntity> data = readerService.readFromExcel(ImportEntity.class);
 
 // 3. Save the marked workbook back to Excel
-readerService.
-
-saveExcelTo("data_with_errors.xlsx");
+// The output file now contains the original data + visual validation markers
+readerService.saveExcelTo("validation_feedback_report.xlsx");
 ```
 
-**Result (data_with_errors.xlsx):**
+**Result (validation_feedback_report.xlsx):**
 
-- Green cells: valid data
-- Red cells with comments: what needs fixing
-- Yellow cells: warnings
+- **Green cells:** Valid data (`Status.SUCCESS`).
+- **Red cells with comments:** Errors (`Status.ERROR`) with detailed explanations.
+- **Yellow cells:** Warnings (`Status.WARNING`).
 
 ---
 
@@ -729,9 +747,9 @@ saveExcelTo("data_with_errors.xlsx");
 
 #### Class-Level Annotations
 
-| Annotation | Purpose                                 | Attributes                                                                            |
-|------------|-----------------------------------------|---------------------------------------------------------------------------------------|
-| `@Sheet`   | Defines Excel sheet name and properties | `name`, `headerRow`, `picture`, `skipHeader`, `endSheet`, `centerHeader/Footer`, etc. |
+| Annotation | Purpose                                 | Attributes                                                                                 |
+|------------|-----------------------------------------|--------------------------------------------------------------------------------------------|
+| `@Sheet`   | Defines Excel sheet name and properties | `name`, `headerRowIndex`, `picture`, `skipHeader`, `endSheet`, `centerHeader/Footer`, etc. |
 
 #### Field-Level Annotations
 
@@ -763,11 +781,11 @@ saveExcelTo("data_with_errors.xlsx");
 **For Writing:**
 
 - **Use streaming for large files:** `.xlsxLarge()`
-- **Style Caching:** DataShepherd handles this automatically via `ExcelStyleManager`.
+- **Style Caching:** ExcelLoom handles this automatically via `ExcelStyleManager`.
 
 **For Reading:**
 
-- **Let DataShepherd handle relationships:** It uses an O(N+M) join which is much faster than manual nested loops.
+- **Let ExcelLoom handle relationships:** It uses an O(N+M) join which is much faster than manual nested loops.
 
 ---
 
@@ -779,7 +797,7 @@ Licensed under **Apache License 2.0**.
 
 ## 📢 Show Your Support
 
-If DataShepherd saved you time, give it a ⭐ on GitHub!
+If ExcelLoom saved you time, give it a ⭐ on GitHub!
 
 **Simple. Powerful. Productive.**
 
